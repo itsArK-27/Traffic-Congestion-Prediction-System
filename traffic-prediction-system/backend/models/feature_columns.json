@@ -1,0 +1,22 @@
+[
+  "TimeNum",
+  "DayNum",
+  "Is_Weekend",
+  "Is_Peak",
+  "Rain",
+  "Clouds",
+  "Total_Lag1",
+  "Total_Lag2",
+  "Total_Lag3",
+  "Total_Lag4",
+  "Total_Lag96",
+  "Total_RollMean4",
+  "Total_RollStd4",
+  "SinTime",
+  "CosTime",
+  "SinDay",
+  "CosDay",
+  "PeakLagInteraction",
+  "RainLagInteraction",
+  "CloudPeakInteraction"
+]

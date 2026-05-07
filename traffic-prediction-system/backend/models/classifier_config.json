@@ -1,0 +1,29 @@
+{
+  "best_classifier": "ExtraTrees",
+  "threshold_config": {
+    "labels": [
+      "Low",
+      "Normal",
+      "High",
+      "Heavy"
+    ],
+    "boundaries": [
+      72.25,
+      112.0,
+      170.0
+    ]
+  },
+  "prev_threshold_config": {
+    "labels": [
+      "Low",
+      "Normal",
+      "High",
+      "Heavy"
+    ],
+    "boundaries": [
+      74.25,
+      108.0,
+      162.5
+    ]
+  }
+}
