@@ -10,6 +10,8 @@ const VEHICLE_TYPES = [
 
 const DAY_LABELS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 function getSituationClass(situation) {
   const s = (situation || '').toLowerCase();
   if (s === 'heavy' || s === 'high') return 'heavy';
@@ -254,7 +256,7 @@ function PredictorPage() {
     const payload = { ...formData, prev_traffic: estimatedPrevTraffic };
 
     try {
-      const res = await fetch('http://localhost:5000/predict', {
+      const res = await fetch(`${API_URL}/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -265,7 +267,7 @@ function PredictorPage() {
 
       setExplaining(true);
       try {
-        const explainRes = await fetch('http://localhost:5000/explain', {
+        const explainRes = await fetch(`${API_URL}/explain`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...payload, ...data }),

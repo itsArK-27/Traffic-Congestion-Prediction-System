@@ -4,7 +4,7 @@ const cors = require('cors');
 const { spawn } = require('child_process');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -12,7 +12,7 @@ app.use(express.static('public'));
 
 function runMLPrediction(time, day, rain, clouds, prev_traffic) {
     return new Promise((resolve, reject) => {
-        const pythonPath = 'C:\\Users\\dell\\AppData\\Local\\Programs\\Python\\Python313\\python.exe';
+        const pythonPath = process.env.PYTHON_PATH || 'python';
         const proc = spawn(pythonPath, ['ml/predict.py', time, day, rain, clouds, prev_traffic]);
         let out = '';
         proc.stdout.on('data', d => out += d.toString());
@@ -75,7 +75,7 @@ app.post('/predict', async (req, res) => {
 });
 
 app.post('/run-eda', (req, res) => {
-    const pythonPath = 'C:\\Users\\dell\\AppData\\Local\\Programs\\Python\\Python313\\python.exe';
+    const pythonPath = process.env.PYTHON_PATH || 'python';
     const proc = spawn(pythonPath, ['ml/eda.py']);
     let out = '';
     proc.stdout.on('data', d => out += d.toString());

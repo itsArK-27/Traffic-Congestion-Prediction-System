@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 function EDAPage() {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState(null);
@@ -9,7 +11,7 @@ function EDAPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/run-eda', { method: 'POST' });
+      const res = await fetch(`${API_URL}/run-eda`, { method: 'POST' });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setStats(data);
@@ -64,15 +66,15 @@ function EDAPage() {
           <div className="plots-grid">
             <div className="plot-card">
               <h3>Hourly Traffic Volume</h3>
-              <img src={`http://localhost:5000/plots/hourly.png?t=${timestamp}`} alt="Hourly Traffic" />
+              <img src={`${API_URL}/plots/hourly.png?t=${timestamp}`} alt="Hourly Traffic" />
             </div>
             <div className="plot-card">
               <h3>Daily Traffic Volume</h3>
-              <img src={`http://localhost:5000/plots/daily.png?t=${timestamp}`} alt="Daily Traffic" />
+              <img src={`${API_URL}/plots/daily.png?t=${timestamp}`} alt="Daily Traffic" />
             </div>
             <div className="plot-card">
               <h3>Traffic Situation Distribution</h3>
-              <img src={`http://localhost:5000/plots/situation.png?t=${timestamp}`} alt="Situation Distribution" />
+              <img src={`${API_URL}/plots/situation.png?t=${timestamp}`} alt="Situation Distribution" />
             </div>
           </div>
         </div>
