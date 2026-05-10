@@ -1031,6 +1031,7 @@ body::after {
   text-transform: capitalize;
 }
 
+/* old class kept for fallback */
 .plots-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1045,15 +1046,124 @@ body::after {
   text-align: center;
 }
 
-.plot-card h3 {
-  color: var(--white-soft);
-  margin-bottom: 1.5rem;
+.plot-card h3 { color: var(--white-soft); margin-bottom: 1.5rem; }
+.plot-card img { max-width: 100%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+/* ─── New EDA Plot Grid ─────────────────────────────────────────────── */
+.eda-plots-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 8px;
 }
 
-.plot-card img {
-  max-width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+.eda-plot-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 24px 24px 20px;
+  transition: border-color 0.3s;
+  animation: fadeSlideUp 0.5s ease both;
+}
+
+.eda-plot-card:hover {
+  border-color: rgba(0, 243, 255, 0.2);
+}
+
+.eda-plot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.eda-plot-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white-soft);
+  letter-spacing: 0.02em;
+}
+
+.eda-analyse-btn {
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1px solid rgba(191, 0, 255, 0.4);
+  background: rgba(191, 0, 255, 0.08);
+  color: var(--purple);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eda-analyse-btn:hover {
+  background: rgba(191, 0, 255, 0.18);
+  border-color: var(--purple);
+  box-shadow: var(--glow-purple);
+  color: #fff;
+}
+
+.eda-plot-img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  display: block;
+}
+
+/* ─── AI Analysis Panel (per chart) ────────────────────────────────── */
+.eda-analysis-panel {
+  margin-top: 16px;
+  padding: 18px 20px;
+  background: rgba(191, 0, 255, 0.04);
+  border: 1px solid rgba(191, 0, 255, 0.18);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeSlideUp 0.4s ease forwards;
+}
+
+.eda-analysis-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple), transparent);
+  opacity: 0.5;
+}
+
+.eda-analysis-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  text-shadow: var(--glow-purple);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.eda-analysis-icon {
+  font-size: 0.75rem;
+}
+
+.eda-analysis-text {
+  font-size: 0.9rem;
+  color: rgba(232, 234, 246, 0.82);
+  line-height: 1.75;
+  letter-spacing: 0.015em;
+}
+
+.eda-analysis-error {
+  font-size: 0.85rem;
+  color: var(--red-neon);
 }
 
 /* About Page */
@@ -1108,4 +1218,365 @@ body::after {
     flex-direction: column;
     gap: 1.5rem;
   }
+}
+
+/* ─── Tool Tabs ─────────────────────────────────────────────────────── */
+.tool-tabs {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 880px;
+  margin-bottom: 16px;
+}
+
+.tool-tab {
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-tab::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.tool-tab:hover {
+  color: var(--white-soft);
+  border-color: rgba(0,243,255,0.2);
+  background: rgba(0,243,255,0.04);
+}
+
+.tool-tab.active {
+  color: var(--cyan);
+  border-color: rgba(0,243,255,0.35);
+  background: rgba(0,243,255,0.08);
+  box-shadow: 0 0 20px rgba(0,243,255,0.1), inset 0 0 20px rgba(0,243,255,0.04);
+  text-shadow: 0 0 10px rgba(0,243,255,0.5);
+}
+
+.tool-tab.active::before {
+  transform: scaleX(1);
+}
+
+/* ─── Event Picker ──────────────────────────────────────────────────── */
+.event-picker-wrapper {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.3s;
+  animation: fadeInUp 0.5s 0.35s both;
+}
+
+.event-picker-wrapper:hover { border-color: rgba(0,243,255,0.2); }
+
+.event-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.event-pill {
+  padding: 7px 14px;
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.event-pill:hover {
+  border-color: rgba(0,243,255,0.3);
+  color: var(--white-soft);
+  background: rgba(0,243,255,0.06);
+  transform: translateY(-1px);
+}
+
+.event-pill.active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,243,255,0.1);
+  box-shadow: 0 0 12px rgba(0,243,255,0.2);
+  text-shadow: 0 0 8px rgba(0,243,255,0.5);
+}
+
+/* ─── Conditions Panel ──────────────────────────────────────────────── */
+.conditions-panel {
+  margin-bottom: 8px;
+}
+
+/* ─── Departure Tab Specifics ───────────────────────────────────────── */
+.departure-fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.departure-field {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 18px 16px 14px;
+  transition: border-color 0.3s;
+}
+
+.departure-field:hover { border-color: rgba(0,243,255,0.2); }
+
+.departure-field-display {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.5rem;
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+  margin: 8px 0;
+}
+
+/* ─── Departure Options ─────────────────────────────────────────────── */
+.departure-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.departure-option-card {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  padding: 16px 20px;
+  transition: all 0.3s ease;
+  animation: fadeSlideUp 0.4s ease both;
+  position: relative;
+  overflow: hidden;
+}
+
+.departure-option-card:hover {
+  border-color: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.04);
+  transform: translateX(4px);
+}
+
+.departure-option-card.optimal {
+  border-color: rgba(0,243,255,0.4);
+  background: rgba(0,243,255,0.06);
+  box-shadow: 0 0 24px rgba(0,243,255,0.1), inset 0 0 20px rgba(0,243,255,0.04);
+}
+
+.optimal-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+  margin-bottom: 10px;
+}
+
+.departure-option-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.departure-time-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dep-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dep-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.4rem;
+  color: var(--white-soft);
+}
+
+.departure-option-card.optimal .dep-time {
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.departure-arrow {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+.departure-meta {
+  margin-left: auto;
+  text-align: right;
+}
+
+.departure-option-bar {
+  margin-top: 12px;
+  height: 3px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.slider-track-fill.color-cyan {
+  background: linear-gradient(90deg, rgba(0,243,255,0.4), var(--cyan));
+  box-shadow: 0 0 8px rgba(0,243,255,0.5);
+}
+
+.slider-thumb.color-cyan {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0,243,255,0.6);
+}
+
+@media (max-width: 700px) {
+  .departure-fields-row { grid-template-columns: 1fr; }
+  .tool-tabs { flex-direction: column; }
+  .event-pills { gap: 6px; }
+}
+
+/* ─── EDA Plot Grid ─────────────────────────────────────────────────── */
+.eda-plots-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 8px;
+}
+
+.eda-plot-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 24px 24px 20px;
+  transition: border-color 0.3s;
+  animation: fadeSlideUp 0.5s ease both;
+}
+
+.eda-plot-card:hover {
+  border-color: rgba(0, 243, 255, 0.2);
+}
+
+.eda-plot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.eda-plot-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white-soft);
+  letter-spacing: 0.02em;
+}
+
+.eda-analyse-btn {
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1px solid rgba(191, 0, 255, 0.4);
+  background: rgba(191, 0, 255, 0.08);
+  color: var(--purple);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eda-analyse-btn:hover {
+  background: rgba(191, 0, 255, 0.18);
+  border-color: var(--purple);
+  box-shadow: var(--glow-purple);
+  color: #fff;
+}
+
+.eda-plot-img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  display: block;
+}
+
+/* Prevent the small donut chart from being stretched to full card width */
+.eda-plot-img.eda-img-donut {
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* ─── AI Analysis Panel (per chart) ────────────────────────────────── */
+.eda-analysis-panel {
+  margin-top: 16px;
+  padding: 18px 20px;
+  background: rgba(191, 0, 255, 0.04);
+  border: 1px solid rgba(191, 0, 255, 0.18);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeSlideUp 0.4s ease forwards;
+}
+
+.eda-analysis-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple), transparent);
+  opacity: 0.5;
+}
+
+.eda-analysis-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--purple);
+  text-shadow: var(--glow-purple);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.eda-analysis-text {
+  font-size: 0.9rem;
+  color: rgba(232, 234, 246, 0.82);
+  line-height: 1.75;
+  letter-spacing: 0.015em;
+}
+
+.eda-analysis-error {
+  font-size: 0.85rem;
+  color: var(--red-neon);
 }
